@@ -6,9 +6,10 @@
 //
 
 import Vapor
-import FluentKit
+import Fluent
+import SSCommon
 
-extension AnyProperty {
+public extension AnyProperty {
     var key: String {
         let desc = "\(self)"
         if desc.contains("key: ") {
@@ -24,13 +25,13 @@ extension AnyProperty {
     }
 }
 
-protocol ContentModel: Model, Content, Validatable {
+public protocol ContentModel: Model, Content, Validatable {
     static var idKeys: [String] { get }
     static func filterResult<T>(_ result: [T], req: Request) -> [T] where T: ContentModel
     static func filterResult<T>(_ result: [T], id: String) -> T? where T: ContentModel
 }
 
-extension ContentModel {
+public extension ContentModel {
     
     /// 验证参数的类型
     /// - Parameter validations: 验证器

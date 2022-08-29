@@ -7,7 +7,7 @@
 
 import Vapor
 
-protocol CommonController: RouteCollection {
+public protocol CommonController: RouteCollection {
     
     associatedtype ModelType: ContentModel
     
@@ -24,7 +24,7 @@ protocol CommonController: RouteCollection {
     func delete(req: Request) async throws -> HTTPStatus
 }
 
-extension CommonController {
+public extension CommonController {
     
     static func schema() -> String {
         return ModelType.schema
@@ -126,5 +126,13 @@ extension CommonController {
         try await module.delete(on: req.db)
         return .ok
     }
+}
 
+
+public func AbortBadRequest(_ reason: String) -> Abort {
+    Abort(.badRequest, reason: reason)
+}
+
+public func AbortServerError(_ reason: String) -> Abort {
+    Abort(.internalServerError, reason: reason)
 }
